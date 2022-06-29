@@ -7,17 +7,22 @@ def FirstFit(block_Size, blocks, process_Size, proccesses):
 
     # find a suitable block for each process
     # the blocks are allocated as per their size
+    best_block = block_Size[0]
+    block_idx = 0
     for i in range(proccesses):
-        best_block = block_Size[0]
-        block_idx = 0
         for j in range(blocks):
             if not occupied[j] and (block_Size[j] >= process_Size[i]):
                 # assign the block j to p[i] process
                 if block_Size[j] < best_block:
                     best_block = block_Size[j]
                     block_idx = j
+        
+        if best_block == sum(block_Size):
+            continue
         allocate[i] = block_idx
         occupied[block_idx] = True
+        best_block = sum(block_Size)
+        block_idx = 0
 
     print("Process No. Process Size Block No.")
 
